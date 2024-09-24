@@ -17,24 +17,20 @@ import { VApp, VAppBar, VToolbarTitle, VNavigationDrawer, VMain, VList, VListIte
     <v-navigation-drawer app permanent>
       <v-list>
         <v-list-item>
-          <RouterLink to="/" class="v-btn" active-class="active-link" exact-active-class="active-link">Home</RouterLink>
+          <RouterLink to="/" class="v-btn link" active-class="active-link" exact-active-class="active-link">Home</RouterLink>
         </v-list-item>
         <v-list-item>
-          <RouterLink to="/products" class="v-btn" active-class="active-link" exact-active-class="active-link">Products</RouterLink>
+          <RouterLink to="/products" class="v-btn link" active-class="active-link" exact-active-class="active-link">Products</RouterLink>
         </v-list-item>
         <v-list-item>
-          <RouterLink to="/create" class="v-btn" active-class="active-link" exact-active-class="active-link">Create</RouterLink>
+          <RouterLink to="/create" class="v-btn link" active-class="active-link" exact-active-class="active-link">Create</RouterLink>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
     <v-main>
       <v-container>
-        <v-row>
-          <v-col class="pa-10">
-            <RouterView />
-          </v-col>
-        </v-row>
+          <RouterView />
       </v-container>
     </v-main>
   </v-app>
@@ -56,10 +52,11 @@ import { VApp, VAppBar, VToolbarTitle, VNavigationDrawer, VMain, VList, VListIte
 
 .v-navigation-drawer {
   background-color: white;
-  width: 240px;
-
-  .active-link {
+  .link {
     color: grey;
+  }
+  .active-link {
+    color: #3f51b5;
   }
 }
 
