@@ -1,4 +1,3 @@
-// src/api/products.ts
 import axios from 'axios';
 
 export interface Product {
@@ -25,4 +24,14 @@ export const getImage = (images: string[]): string => {
     return cleanedImages[0];
   }
   return 'https://via.placeholder.com/200';
+};
+
+
+export const createProduct = async (payload: any) => { // Accept payload as a parameter
+  try {
+    const response = await axios.post('https://api.escuelajs.co/api/v1/products', payload);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
