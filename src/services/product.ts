@@ -12,7 +12,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
   try {
     const response = await axios.get<Product[]>('https://api.escuelajs.co/api/v1/products');
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching products:', error);
     throw error;
   }
@@ -36,11 +36,21 @@ export const getProduct = async (id: any) => {
   }
 };
 
-export const createProduct = async (payload: any) => { // Accept payload as a parameter
+export const createProduct = async (payload: any) => {
   try {
     const response = await axios.post('https://api.escuelajs.co/api/v1/products', payload);
     return response.data;
   } catch (error) {
+    throw error;
+  }
+};
+
+export const updateProduct = async (id: number, payload: any) => {
+  try {
+    const response = await axios.put(`https://api.escuelajs.co/api/v1/products/${id}`, payload);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error updating product:', error.response?.data || error.message);
     throw error;
   }
 };

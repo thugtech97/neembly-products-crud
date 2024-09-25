@@ -4,7 +4,7 @@ import { fetchProducts, Product } from '@/services/product';
 import ProductCard from '@/components/ProductCard.vue';
 
 const products = ref<Product[]>([]);
-const loading = ref(true); // Track loading state
+const loading = ref(true);
 
 onMounted(async () => {
   try {
@@ -12,7 +12,7 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error fetching products:', error);
   } finally {
-    loading.value = false; // Set loading to false after fetching
+    loading.value = false;
   }
 });
 </script>
