@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { defineProps, onMounted, reactive, ref } from 'vue';
-import { getProduct } from '@/services/product';
+import { useRouter } from 'vue-router'
+import { getProduct, updateProduct } from '@/services/product';
 
 const props = defineProps<{
     id: string;
@@ -13,6 +14,11 @@ const form = reactive({
     category: '',
     image: ''
 });
+
+const router = useRouter();
+const snackbar = ref(false);
+const snackbarMessage = ref('');
+const snackbarColor = ref('success');
 
 const vFormRef = ref(null);
 const loading = ref(true);
@@ -41,7 +47,27 @@ onMounted(async () => {
 });
 
 const saveChanges = async () => {
-    
+    try {
+        const payload = {
+            title: form.title,
+            price: form.price,
+            description: form.description,
+            images: [form.image]
+        };
+        const updatedProduct = await updateProduct(props.id, payload);
+        console.log('Product updated successfully:', updatedProduct);
+        snackbarMessage.value = 'Product updated successfully!';
+        snackbarColor.value = 'success';
+        snackbar.value = true;
+        setTimeout(() => {
+          router.push('/products');
+        }, 2000);
+    } catch (error) {
+        snackbarMessage.value = error.response?.data?.message || 'An error occurred while updating the product.';
+        snackbarColor.value = 'error';
+        snackbar.value = true;
+        console.error('Failed to update product:', error);
+    }
 };
 </script>
 
@@ -111,6 +137,12 @@ const saveChanges = async () => {
                 <v-btn color="primary" class="ml-2" @click="saveChanges">Save changes</v-btn>
             </v-row>
         </v-form>
+        <v-snackbar v-model="snackbar" :color="snackbarColor" timeout="3000">
+            {{ snackbarMessage }}
+            <template v-slot:action="{ attrs }">
+                <v-btn text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+            </template>
+        </v-snackbar>
         <v-progress-circular v-if="loading" indeterminate></v-progress-circular>
     </v-container>
 </template>
