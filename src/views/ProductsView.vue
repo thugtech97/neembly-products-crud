@@ -31,13 +31,12 @@ let fetchItems = async () => {
 };
 
 let fetchTypes = async () => {
-    try {
-        categories.value = await fetchCategories();
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
+  try {
+    categories.value = await fetchCategories();
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+  }
 };
-
 
 let handleDeleteProduct = async (id: number) => {
   try {
@@ -56,17 +55,27 @@ let handleDeleteProduct = async (id: number) => {
 
 const filteredProducts = computed(() => {
   return products.value.filter((product) => {
-    const matchesTitleDescription = product.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
-                                    product.description.toLowerCase().includes(searchQuery.value.toLowerCase());
-    
-    const matchesPrice = (!minPrice.value || product.price >= minPrice.value) &&
-                         (!maxPrice.value || product.price <= maxPrice.value);
+    const matchesTitleDescription =
+      product.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchQuery.value.toLowerCase());
 
-    const matchesCategory = !selectedCategory.value || product.category.id === selectedCategory.value;
+    const matchesPrice =
+      (!minPrice.value || product.price >= minPrice.value) &&
+      (!maxPrice.value || product.price <= maxPrice.value);
+
+    const matchesCategory =
+      !selectedCategory.value || product.category.id === selectedCategory.value;
 
     return matchesTitleDescription && matchesPrice && matchesCategory;
   });
 });
+
+const resetFilters = () => {
+  searchQuery.value = '';
+  minPrice.value = null;
+  maxPrice.value = null;
+  selectedCategory.value = null;
+};
 
 onMounted(async () => {
   fetchItems();
@@ -77,7 +86,6 @@ onMounted(async () => {
 <template>
   <div>
     <h1>Products ({{ filteredProducts.length }})</h1>
-    
     <v-container>
       <v-row>
         <v-col cols="12" md="4">
@@ -108,7 +116,7 @@ onMounted(async () => {
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="3">
           <v-select
             variant="outlined"
             v-model="selectedCategory"
@@ -118,6 +126,9 @@ onMounted(async () => {
             label="Category"
             clearable
           ></v-select>
+        </v-col>
+        <v-col cols="12" md="1" class="d-flex">
+          <v-btn color="primary" @click="resetFilters">Reset</v-btn>
         </v-col>
       </v-row>
     </v-container>
