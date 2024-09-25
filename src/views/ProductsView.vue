@@ -1,19 +1,34 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { fetchProducts, Product } from '@/services/product';
+import { fetchProducts, deleteProduct, Product } from '@/services/product';
 import ProductCard from '@/components/ProductCard.vue';
+import NoRecords from '@/components/NoRecords.vue';
 
-const products = ref<Product[]>([]);
-const loading = ref(true);
+let products = ref<Product[]>([]);
+let loading = ref(true);
 
-onMounted(async () => {
+let fetch = async () => {
   try {
+    loading.value = true;
     products.value = await fetchProducts();
   } catch (error) {
     console.error('Error fetching products:', error);
   } finally {
     loading.value = false;
   }
+}
+
+let handleDeleteProduct = async (id: number) => {
+  try {
+    await deleteProduct(id);
+    fetch();
+  } catch (error) {
+    console.error('Error deleting product:', error);
+  }
+}
+
+onMounted(async () => {
+  fetch();
 });
 </script>
 
@@ -28,10 +43,16 @@ onMounted(async () => {
             <p>Loading products...</p>
           </v-col>
         </template>
+
         <template v-else>
-          <v-col v-for="product in products" :key="product.id" cols="12" sm="6" md="4" lg="3">
-            <ProductCard :product="product" />
-          </v-col>
+          <template v-if="products.length === 0">
+            <NoRecords />
+          </template>
+          <template v-else>
+            <v-col v-for="product in products" :key="product.id" cols="12" sm="6" md="4" lg="3">
+              <ProductCard :product="product" @delete-product="handleDeleteProduct" />
+            </v-col>
+          </template>
         </template>
       </v-row>
     </v-container>
