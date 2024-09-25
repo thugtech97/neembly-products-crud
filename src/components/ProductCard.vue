@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { defineProps, ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router'; // Import useRouter
 import { getImage } from '@/services/product';
 
 const props = defineProps<{
     product: any;
 }>();
+
+const router = useRouter(); // Initialize router
 
 const expandedDescriptions = ref<{ [key: number]: boolean }>({});
 
@@ -20,11 +23,15 @@ const truncatedDescription = (description: string) => {
   return description.length > 150 ? description.slice(0, 150) : description;
 };
 
+const navigateToProductView = () => {
+  router.push({ path: `/products/${props.product.id}` });
+};
+
 </script>
 
 <template>
     <div>
-        <v-card class="pa-3">
+        <v-card class="pa-3" @click="navigateToProductView">
             <div class="image-container">
                 <img 
                     :src="getImage(product.images)" 
