@@ -27,6 +27,15 @@ export const getImage = (images: string[]): string => {
 };
 
 
+export const getProduct = async (id: any) => {
+  try{
+    const response = await axios.get(`https://api.escuelajs.co/api/v1/products/${id}`);
+    return response.data
+  }catch(error){
+    throw error;
+  }
+};
+
 export const createProduct = async (payload: any) => { // Accept payload as a parameter
   try {
     const response = await axios.post('https://api.escuelajs.co/api/v1/products', payload);

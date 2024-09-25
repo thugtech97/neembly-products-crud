@@ -33,6 +33,11 @@ import { VApp, VAppBar, VToolbarTitle, VNavigationDrawer, VMain, VList, VListIte
           <RouterView />
       </v-container>
     </v-main>
+    <v-footer app color="accent">
+        <v-container>
+            <span>&copy; Thugtech Products</span>
+        </v-container>
+    </v-footer>
   </v-app>
 </template>
 
@@ -51,7 +56,7 @@ import { VApp, VAppBar, VToolbarTitle, VNavigationDrawer, VMain, VList, VListIte
 }
 
 .v-navigation-drawer {
-  background-color: white;
+  background-color: rgb(255, 246, 246);
   .link {
     color: grey;
   }

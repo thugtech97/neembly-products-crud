@@ -134,7 +134,7 @@ onMounted(async () => {
         class="mt-3"
       ></v-img>
 
-      <v-row class="mt-4 float-right">
+      <v-row class="mt-4 mb-4 float-right">
         <v-btn color="secondary" @click="resetForm">Reset</v-btn>
         <v-btn color="primary" class="ml-2" @click="submitProduct">Submit</v-btn>
       </v-row>
