@@ -54,3 +54,13 @@ export const updateProduct = async (id: number, payload: any) => {
     throw error;
   }
 };
+
+export const deleteProduct = async (id: number) => {
+  try {
+    const response = await axios.delete(`https://api.escuelajs.co/api/v1/products/${id}`);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error deleting product:', error.response?.data || error.message);
+    throw error;
+  }
+};
