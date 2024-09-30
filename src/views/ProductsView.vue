@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
-import { fetchProducts, deleteProduct, Product } from '@/services/product';
-import { fetchCategories, Category } from '@/services/category';
+import { fetchProducts, deleteProduct, type Product } from '@/services/product';
+import { fetchCategories, type Category } from '@/services/category';
 import ProductCard from '@/components/ProductCard.vue';
 import NoRecords from '@/components/NoRecords.vue';
 
@@ -45,7 +45,7 @@ let handleDeleteProduct = async (id: number) => {
     snackbarColor.value = 'success';
     snackbar.value = true;
     fetchItems();
-  } catch (error) {
+  } catch (error: any) {
     snackbarMessage.value = error.response?.data?.message || 'Error: ' + error;
     snackbarColor.value = 'error';
     snackbar.value = true;
@@ -155,8 +155,8 @@ onMounted(async () => {
       </v-row>
       <v-snackbar v-model="snackbar" :color="snackbarColor" timeout="3000">
         {{ snackbarMessage }}
-        <template v-slot:action="{ attrs }">
-          <v-btn text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+        <template v-slot:actions="{ isActive }">
+          <v-btn text="true" v-bind="isActive" @click="snackbar = false">Close</v-btn>
         </template>
       </v-snackbar>
     </v-container>

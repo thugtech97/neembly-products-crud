@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { fetchCategories, Category } from '@/services/category';
+import { fetchCategories, type Category } from '@/services/category';
 import { createProduct } from '@/services/product';
 
-let form = reactive({
+let form:any = reactive({
   productTitle: '',
   price: '',
   description: '',
@@ -22,7 +22,7 @@ const required = (value: string) => !!value || 'This field is required';
 const priceValidation = (value: number) =>
   value !== null && value > 0 || 'Price must be greater than zero';
 
-const vFormRef = ref(null);
+const vFormRef: any = ref(null);
 
 let resetForm = () => {
   form.productTitle = '';
@@ -51,7 +51,7 @@ const submitProduct = async () => {
         setTimeout(() => {
           router.push('/products');
         }, 2000);
-    } catch (error) {
+    } catch (error: any) {
         snackbarMessage.value = error.response?.data?.message || 'An error occurred while inserting the product.';
         snackbarColor.value = 'error';
         snackbar.value = true;
@@ -142,8 +142,8 @@ onMounted(async () => {
     
     <v-snackbar v-model="snackbar" :color="snackbarColor" timeout="3000">
       {{ snackbarMessage }}
-      <template v-slot:action="{ attrs }">
-        <v-btn text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+      <template v-slot:actions="{ isActive }">
+        <v-btn text="true" v-bind="isActive" @click="snackbar = false">Close</v-btn>
       </template>
     </v-snackbar>
   </v-container>

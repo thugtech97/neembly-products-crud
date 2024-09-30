@@ -18,7 +18,7 @@ const props = defineProps<{
                     <i :class="icon + ' card-icon'"></i>
                 </VCardTitle>
                 <VCardActions class="card-actions">
-                    <VBtn text class="card-button">{{ buttonText }}</VBtn>
+                    <VBtn text="true" class="card-button">{{ buttonText }}</VBtn>
                 </VCardActions>
             </VCard>
         </RouterLink>

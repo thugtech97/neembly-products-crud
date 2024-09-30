@@ -40,7 +40,7 @@ const deleteProduct = () => {
       <div class="image-container">
         <img 
           :src="getImage(product.images)" 
-          @error="(e) => e.target.src='https://via.placeholder.com/200'" 
+          @error="(e: any) => e.target.src='https://via.placeholder.com/200'" 
           alt="Product image" 
           height="200px" 
           class="rounded"

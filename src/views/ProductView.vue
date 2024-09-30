@@ -3,7 +3,7 @@ import { defineProps, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { getProduct, updateProduct } from '@/services/product';
 
-const props = defineProps<{
+const props: any = defineProps<{
     id: string;
 }>();
 
@@ -38,7 +38,7 @@ onMounted(async () => {
             category: product.category.name,
             image: product.images[0].replace('[', '').replace(']', '').replace(/"/g, '')
         });
-    } catch (err) {
+    } catch (err: any) {
         error.value = 'Error fetching product: ' + (err.response?.data || err.message);
         console.error(err);
     } finally {
@@ -62,7 +62,7 @@ const saveChanges = async () => {
         setTimeout(() => {
           router.push('/products');
         }, 2000);
-    } catch (error) {
+    } catch (error: any) {
         snackbarMessage.value = error.response?.data?.message || 'An error occurred while updating the product.';
         snackbarColor.value = 'error';
         snackbar.value = true;
@@ -127,7 +127,7 @@ const saveChanges = async () => {
                 <img
                     v-if="form.image"
                     :src="form.image"
-                    @error="(e) => e.target.src='https://via.placeholder.com/200'"
+                    @error="(e: any) => e.target.src='https://via.placeholder.com/200'"
                     alt="Product image preview"
                     class="centered-image"
                 />
@@ -139,8 +139,8 @@ const saveChanges = async () => {
         </v-form>
         <v-snackbar v-model="snackbar" :color="snackbarColor" timeout="3000">
             {{ snackbarMessage }}
-            <template v-slot:action="{ attrs }">
-                <v-btn text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+            <template v-slot:actions="{ isActive  }">
+                <v-btn text="true" v-bind="isActive " @click="snackbar = false">Close</v-btn>
             </template>
         </v-snackbar>
         <v-progress-circular v-if="loading" indeterminate></v-progress-circular>
