@@ -9,7 +9,7 @@
     "start": "vite preview",
     "preview": "vite preview",
     "test:unit": "vitest",
-    "heroku-postbuild": "npm install && npm run build",
+    "heroku-postbuild": "npm install && npm install vite && npm run build",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
